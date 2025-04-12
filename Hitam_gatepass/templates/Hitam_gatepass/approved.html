@@ -1,0 +1,66 @@
+{% extends 'Hitam_gatepass/Facultybase.html' %}
+
+{% block title %}
+<title>Approved Passes</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <h1>Approved Passes</h1>
+    <p>Gatepasses Count: {{ Gatepass|length }}</p>
+
+    <!-- Check if the Faculty is the HOD -->
+    
+        <h2>Approved Passes for HOD</h2>
+        {% for pass in Gatepass %}
+        
+            {% if Hod  %}
+                <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ pass.g_student.s_img }}" class="img-fluid rounded-start" alt="Student Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ pass.g_student.s_name }}</h5>
+                                <p class="card-text">Reason: {{ pass.g_purpose }}</p>
+                                <p class="card-text">Type: {{ pass.g_type }}</p>
+                                <p class="card-text">Status: {{ pass.g_status }}</p>
+                                <p class="card-text">Time: &nbsp; &nbsp;From: &nbsp;{{ pass.g_out_time }} &nbsp;&nbsp;To: &nbsp;{{ pass.g_in_time }}</p>
+
+                                <p class="card-text"><small class="text-body-secondary">Date: {{ pass.g_date }}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        
+
+    <!-- Check if the Faculty is a Mentor -->
+   
+               {% if not Hod and Mentor %}               
+                 <div class="card mb-3" style="max-width: 540px;">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ pass.g_student.s_img }}" class="img-fluid rounded-start" alt="Student Image">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ pass.g_student.s_name }}</h5>
+                                <p class="card-text">Reason: {{ pass.g_purpose }}</p>
+                                <p class="card-text">type: {{ pass.g_type }}</p>
+                                <p class="card-text">Status: {{ pass.g_status }}</p>
+                                <p class="card-text"><small class="text-body-secondary">Date: {{ pass.g_date }}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        
+    {% endfor %}
+</div>    
+    <script>
+        emb=document.getElementById('approved');
+        emb.style.display = "none";</script>
+{% endblock %}

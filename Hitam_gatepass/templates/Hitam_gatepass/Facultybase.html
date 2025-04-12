@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
+    {% endblock %}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Hitam_gatepass/faculty.css' %}">
+    <script src="{% static 'Hitam_gatepass/js/script.js' %}"></script>
+   
+</head>
+<body>
+    <nav class="navbar">
+        <form class="container-fluid justify-content-start">
+            <!-- HOD-specific buttons -->
+            {% if Hod %}
+                <a href="{% url 'Hitam_gatepass:Normal_pass' %}?staff_name={{ staff_name }}" class="btn btn-outline-success me-2" id ="normal">Normal Pass</a>
+            {% endif %}
+            <!-- Emergency Pass button for both HODs and Mentors -->
+            
+                <a href="{% url 'Hitam_gatepass:Emergency_pass' %}?staff_name={{ staff_name }}" class="btn btn-outline-success me-2" id="emergency">Emergency Pass</a>
+                <a href="{% url 'Hitam_gatepass:apply_gatepass' %}?staff_name={{ staff_name }}" class="btn btn-outline-success me-2" id="gatepass">Gate Pass Form</a>
+                <a href="{% url 'Hitam_gatepass:approve_gatepass' %}?staff_name={{ staff_name }}" class="btn btn-outline-success me-2" id="approved">Approved</a>
+
+            
+        
+            <p name="staff">Staff Name: {{ staff_name }}</p>
+        </form>
+    </nav>
+
+    {% block content %}
+
+    
+    {% endblock %}
+</body>
+</html>

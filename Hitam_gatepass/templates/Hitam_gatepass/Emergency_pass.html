@@ -1,0 +1,169 @@
+{% extends 'Hitam_gatepass/Facultybase.html' %}
+
+{% block title %}
+<title>Emergency Pass</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="border">
+        <h1>Emergency Passes</h1>
+        <p>Gatepasses Count: {{ Gatepass|length }}</p>
+        <div class="container">
+            <div class="border">
+                {% if Gatepass %}
+                    {% for normal in Gatepass %}
+                        {% if normal.g_type == 'Emergency' %}
+                            {% if debug %}
+                                <p>Debug: g_type={{ normal.g_type }}, g_status={{ normal.g_status }}, g_student.s_mentor={{ normal.g_student.s_mentor }}, staff_name={{ staff_name }}</p>
+                            {% endif %}
+
+                            <!-- Case 1: HOD is the Mentor -->
+                            {% if Hod and Hod.Hod_name|lower == staff_name|lower %}
+                                {% if normal.g_status == 'mentor Approved' %}
+                                    <div class="card mb-3" style="max-width: 100%;">
+                                        <div class="card-header" style="text-align:auto;">
+                                            <h2>Hitam Gate Pass</h2>
+                                            <div class="card mb-3" style="width:100%; height: 100%;">
+                                                <div class="row g-0">
+                                                    <div class="col-md-4" style="text-align: center;">
+                                                        <img src="{{ normal.g_student.s_img }}" class="img-fluid rounded-start" alt="Student Image" style="max-width:60%;">
+                                                        <p class="card-title">{{ normal.g_student.s_name }}</p>
+                                                        <p class="card-title" style="margin-bottom: 10%">{{ normal.g_student.s_roll }}</p>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="card-body" style="text-align: left;">
+                                                            <h5 class="card-title">Attendance: {{ normal.g_student.s_attendec_present }} %</h5>
+                                                            <p class="card-text">Year and Branch: {{ normal.g_student.s_year }} Year {{ normal.g_student.s_branch }} {{ normal.g_student.s_section }}</p>
+                                                            <p class="card-text">Time: &nbsp; &nbsp;From: &nbsp;{{ normal.g_out_time }} &nbsp;&nbsp;To: &nbsp;{{ normal.g_in_time }}</p>
+                                                            <p class="card-text">Reason: {{ normal.g_purpose }}</p>
+                                                            
+                                                            <p class="card-text">Status: Directly Approved by HOD (Mentor)</p>
+                                                            <form method="POST" action="{% url 'Hitam_gatepass:normal_approve_gatepass' normal.g_id %}">
+                                                                {% csrf_token %}
+                                                                <button type="submit" class="btn btn-success">Approve as HOD</button>
+                                                            </form>
+                                                        </div>
+                                                        <p class="card-text"><small class="text-body-secondary">Date: {{ normal.g_date }}</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            <!-- Case 2: HOD is for the Same Branch -->
+                            {% if normal.g_status == 'Not Approved' %}
+                                {% if Hod and Hod.Hod_name|lower == staff_name|lower and normal.g_student.s_mentor.M_name == Hod.Hod_name %}
+                                <div class="card mb-3" style="max-width: 100%;">
+                                    <div class="card-header" style="text-align:auto;">
+                                        <h2>Hitam Gate Pass</h2>
+                                        <div class="card mb-3" style="width:100%; height: 100%;">                                        <div class="row g-0">
+                                            <div class="col-md-4" style="text-align: center;">
+                                                <img src="{{ normal.g_student.s_img }}" class="img-fluid rounded-start" alt="Student Image" style="max-width:60%;">
+                                                <p class="card-title">{{ normal.g_student.s_name }}</p>
+                                                <p class="card-title">{{ normal.g_student.s_roll }}</p>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Attendance: {{ normal.g_student.s_attendec_present }} %</h5>
+                                                    <p class="card-text">Year and Branch: {{ normal.g_student.s_year }} Year {{ normal.g_student.s_branch }} {{ normal.g_student.s_section }}</p>
+                                                    <p class="card-text">Time: &nbsp; &nbsp;From: &nbsp;{{ normal.g_out_time }} &nbsp;&nbsp;To: &nbsp;{{ normal.g_in_time }}</p>
+
+                                                    <p class="card-text">Reason: {{ normal.g_purpose }}</p>
+                                                    <p class="card-text">Student under your mentor</p>
+                                                    <p class="card-text"><small class="text-body-secondary">Date: {{ normal.g_date }}</small></p>
+                                                    <form method="POST" action="{% url 'Hitam_gatepass:hod_approve_gatepass' normal.g_id %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-success">Approve</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+
+
+                                
+                                {% endif %}
+                            {% endif %}
+
+                            <!-- Case 3: Faculty as Mentor -->
+                            {% if normal.g_status == 'Not Approved' %}
+                            {% if Mentor and normal.g_student.s_mentor.M_name|lower == staff_name|lower and not Hod %}
+                            <p>Debug: Mentor.M_name matches staff_name</p>
+                            <div class="card mb-3" style="max-width: 100%;">
+                                <div class="card-header" style="text-align:auto;">
+                                    <h2>Hitam Gate Pass</h2>
+                                    <div class="card mb-3" style="max-width: 540px;">
+                                        <div class="row g-0">
+                                            <div class="col-md-4" style="text-align: center;">
+                                                <img src="{{ normal.g_student.s_img }}" class="img-fluid rounded-start" alt="Student Image" style="max-width:60%;">
+                                                <p class="card-title">{{ normal.g_student.s_name }}</p>
+                                                <p class="card-title" style="margin-bottom: 20px;">{{ normal.g_student.s_roll }}</p>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Attendance: {{ normal.g_student.s_attendec_present }} %</h5>
+                                                    <p class="card-text">Year and Branch: {{ normal.g_student.s_year }} Year {{ normal.g_student.s_branch }} {{ normal.g_student.s_section }}</p>
+                                                    <p class="card-text">Time: &nbsp; &nbsp;From: &nbsp;{{ normal.g_out_time }} &nbsp;&nbsp;To: &nbsp;{{ normal.g_in_time }}</p>
+
+                                                    <p class="card-text">Reason: {{ normal.g_purpose }}</p>
+                                                    <p class="card-text">Status: {{ normal.g_status }}</p>
+                                                    <p class="card-text"><small class="text-body-secondary">Date: {{ normal.g_date }}</small></p>
+                                                    <form method="POST" action="{% url 'Hitam_gatepass:mentor_approve_gatepass' normal.g_id %}">
+                                                        {% csrf_token %}
+                                                        <button type="submit" class="btn btn-primary">Mentor Approve</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center text-muted">No emergency gate passes available at the moment.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    emb=document.getElementById('emergency');
+    emb.style.display = "none";
+    document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+            const submitButton = this.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = 'Processing...';
+
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'X-CSRFToken': this.querySelector('[name=csrfmiddlewaretoken]').value
+                }
+            }).then(response => {
+                submitButton.disabled = false;
+                submitButton.innerHTML = 'Submit';
+                if (response.ok) {
+                    alert('Gate pass approved successfully!');
+                    location.reload(); // Reload the page to show updated data
+                } else {
+                    alert('Failed to approve the gate pass. Please try again.');
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

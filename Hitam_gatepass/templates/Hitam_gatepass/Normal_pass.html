@@ -1,0 +1,70 @@
+{% extends 'Hitam_gatepass/Facultybase.html' %}
+
+{% block title %}
+{% endblock title %}
+{%block content %}
+<div class="container">
+    <div class="border">
+        <h1>Normal Passes</h1>
+
+        
+        <p>Gatepasses Count: {{ Gatepass|length }}</p>
+       
+    
+        <h2>Gate Passes</h2>
+        {% for normal in Gatepass %}
+          {% if normal.g_type == 'Normal' %}
+           {% if normal.g_status == 'Not Approved' %}
+           <div class="card mb-3" style="max-width: 100%;">
+            <div class="card-header" style="text-align:auto;">
+                <h2>Hitam Gate Pass</h2>
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="row g-0">
+                        <div class="col-md-4" style="text-align: center;">
+                            <img src="{{ normal.g_student.s_img }}" class="img-fluid rounded-start" alt="Student Image" style="max-width:60%;">
+                            <p class="card-title">{{ normal.g_student.s_name }}</p>
+                        <p class="card-title">{{ normal.g_student.s_roll }}</p>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body" style="text-align: left;">
+                            <h5 class="card-title"><span style="font-weight:bold;" >Attendance:</span> {{ normal.g_student.s_attendec_present }} %</h5>
+                            <p class="card-text"><span style="font-weight:bold;" >Year and Branch:</span> {{ normal.g_student.s_year }} Year {{ normal.g_student.s_branch }} {{ normal.g_student.s_section }}</p>
+                            <p class="card-text"><span style="font-weight:bold;" >Time: </span>&nbsp; &nbsp;<span style="font-weight:bold;" >From:</span> &nbsp;{{ normal.g_out_time }} &nbsp;&nbsp;<span style="font-weight:bold;" >To:</span> &nbsp;{{ normal.g_in_time }}</p>
+
+                            <p class="card-text"><span style="font-weight:bold;" >Reason:</span> {{ normal.g_purpose }}</p>
+                            <p class="card-text"><span style="font-weight:bold;" >Type:</span> {{ normal.g_type }}</p>
+                            <p class="card-text"><span style="font-weight:bold;" >Status:</span> {{ normal.g_status }}</p>
+                            <p class="card-text"><small class="text-body-secondary">Date:</span> {{ normal.g_date }}</small></p>
+                            <p>Gatepass ID: {{ normal.g_id }}</p>
+                            
+                            <!-- Approval Button -->
+                            <form method="POST" action="{% url 'Hitam_gatepass:normal_approve_gatepass' normal.g_id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+
+    
+     
+      
+       
+    
+     
+
+
+
+    </div>
+</div>            
+<script>
+    emb=document.getElementById('normal');
+    emb.style.display = "none";</script>
+
+{%endblock %}

@@ -1,0 +1,48 @@
+<!-- filepath: c:\Users\MD ARIF\OneDrive\Desktop\Hitam_gate_pass\Hitam_gatepass\templates\Hitam_gatepass\passapply.html -->
+{% extends 'Hitam_gatepass/Facultybase.html' %}
+
+{% block title %}
+Apply for Gate Pass
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Apply for Gate Pass</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="rollNumber" class="form-label">Roll Number</label>
+            <input type="text" class="form-control" id="rollNumber" name="rollNumber" placeholder="Enter Roll Number" required>
+        </div>
+        <div class="mb-3">
+            <label for="studentName" class="form-label">Student Name</label>
+            <input type="text" class="form-control" id="studentName" name="studentName" placeholder="Enter Student Name" required>
+        </div>
+        <div class="mb-3">
+            <label for="passType" class="form-label">Pass Type</label>
+            <select class="form-select" id="passType" name="passType" required>
+                <option value="" disabled selected>Select Pass Type</option>
+                <option value="Normal">Normal</option>
+                <option value="Emergency">Emergency</option>
+                <option value="Special">Special</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="purpose" class="form-label">Purpose</label>
+            <textarea class="form-control" id="purpose" name="purpose" rows="3" placeholder="Enter the purpose of the pass" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="fromTime" class="form-label">From Time</label>
+            <input type="time" class="form-control" id="fromTime" name="fromTime" required>
+        </div>
+        <div class="mb-3">
+            <label for="toTime" class="form-label">To Time</label>
+            <input type="time" class="form-control" id="toTime" name="toTime" required>
+        </div>
+        <button type="submit" class="btn btn-outline-success">Submit</button>
+    </form>
+</div>
+<script>
+    emb=document.getElementById('gatepass');
+    emb.style.display = "none";</script>
+{% endblock %}

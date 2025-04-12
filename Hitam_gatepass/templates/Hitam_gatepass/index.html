@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <script src="{% static 'Hitam_gatepass/js/script.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'Hitam_gatepass/style.css' %}">
+    <title>Gate Pass</title>
+</head>
+<body>
+    <div class="container">
+        <div class="border">
+            <div class="header">
+                <h1> Hitam Gate Pass</h1>
+            </div>
+            <div class="border">
+                <div>
+                    <div class="student_pass">
+                        <form action=" {% url 'Hitam_gatepass:Student_enter'   %}" method="post">
+                            {% csrf_token %}
+                            <label for="student_name">Student Name</label>
+                            <input type="text" name="student_name" id="student_name" required>
+                            <label for="roll_no">Roll No</label>
+                            <input type="text" name="roll_no" id="roll_no" required>
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                    <div class="staff_login">
+                        <form action="{% url 'Hitam_gatepass:faculty' %}" method="post">
+                            {% csrf_token %}
+                            <label for="staff_name">Staff Name</label>
+                            <input type="text" name="staff_name" id="staff_name" required>
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" required>
+                            <button type="submit">Login</button>
+                        </form>
+                    </div>
+                    <div>
+                        <button type="button" class="stubn" onclick="change_student()">Student form</button>
+                        <button type="button" class="stfbn" onclick="change_staff()">Staff form</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const stl = document.querySelector('.staff_login');
+        const stp = document.querySelector('.student_pass');
+        const stubn = document.querySelector('.stubn');
+        const stfbn = document.querySelector('.stfbn');
+
+        stl.style.display = 'none';
+        stp.style.display = 'block';
+        stubn.style.display = 'none';
+        stfbn.style.display = 'block';
+
+        function change_staff() {
+            stl.style.display = 'block';
+            stp.style.display = 'none';
+            stubn.style.display = 'block';
+            stfbn.style.display = 'none';
+        }
+
+        function change_student() {
+            stl.style.display = 'none';
+            stp.style.display = 'block';
+            stubn.style.display = 'none';
+            stfbn.style.display = 'block';
+        }
+
+        // Automatically convert input values to uppercase as the user types
+        document.getElementById('student_name').addEventListener('input', function () {
+            this.value = this.value.toUpperCase();
+        });
+
+        document.getElementById('roll_no').addEventListener('input', function () {
+            this.value = this.value.toUpperCase();
+        });
+
+        document.getElementById('staff_name').addEventListener('input', function () {
+            this.value = this.value.toUpperCase();
+        });
+        document.getElementById('password').addEventListener('input', function () {
+            this.value = this.value.toUpperCase();
+        });
+    </script>
+</body>
+</html>
