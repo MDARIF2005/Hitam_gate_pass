@@ -1,0 +1,92 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light gray background */
+    
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #343a40; /* Dark gray background */
+    padding: 15px; /* Increased padding for better spacing */
+    border-bottom: 3px solid #28a745; /* Green border for emphasis */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Debug text inside the navbar */
+.navbar p {
+    color: white;
+    margin: 0 15px 0 0; /* Spacing between debug text and buttons */
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Buttons inside the navbar */
+.navbar .btn {
+    color: white;
+    border-color: white;
+    margin-right: 10px;
+    font-weight: bold;
+    padding: 8px 15px; /* Adjusted padding for better button size */
+    font-size: 14px;
+    text-transform: uppercase;
+    background-color: transparent; /* Ensure transparent background */
+}
+
+.navbar .btn:hover {
+    background-color: #28a745; /* Green background on hover */
+    color: white;
+    border-color: #28a745;
+}
+
+/* Form alignment inside the navbar */
+.container-fluid {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Content container styling */
+.container {
+    margin-top: 30px; /* Increased margin for better spacing */
+    padding: 25px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+}
+
+/* Headings */
+h1, h2 {
+    color: #343a40; /* Dark gray */
+    font-weight: bold;
+    margin-bottom: 20px; /* Added spacing below headings */
+}
+
+/* Buttons */
+.btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
+    padding: 8px 15px; /* Adjusted padding for consistency */
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: white;
+}
+
+/* Footer (if applicable) */
+footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 15px 0; /* Increased padding for better spacing */
+    margin-top: 30px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 14px;
+}

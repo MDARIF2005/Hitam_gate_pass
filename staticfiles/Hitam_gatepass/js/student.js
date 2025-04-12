@@ -1,33 +1,46 @@
 // Get references to the elements
 const eneter = document.getElementById("out_of_time");
-const student = document.getElementById("student");
 const normalForm = document.getElementById("Normal_pass_form");
 const emergencyForm = document.getElementById("Emergency");
 const em_fprm = document.getElementById("em_form");
-
-
-eneter.style.display = "none"; // Hide the "out_of_time" message by default
-student.style.display = "none";
-em_fprm.style.display = "none"; // Hide the student form by default
-emergencyForm.style.display = "none"; // Hide the emergency form by default
-normalForm.style.display = "none"; // Hide the normal form by default
- // Hide the student form by default
-
-// Example logic to show/hide forms based on conditions
-if (eneter) {
-    eneter.style.display = "block"; // Show the "out_of_time" message
-}
+const wait = document.getElementById("wait_approved");
+const gatepass = document.getElementById("gate_pass");
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded and parsed");
-    const normalForm = document.getElementById("Normal_pass_form");
-    const emergencyForm = document.getElementById("Emergency");
 
-    // Hide forms by default
+    // Check if the current time is between 10:00 AM and 3:00 PM
+    const now = new Date();
+    const currentHour = now.getHours();
+
+    const startHour = 7; // 10:00 AM
+    const endHour = 24; // 3:00 PM
+
+    // Hide all forms by default
+    if (eneter) eneter.style.display = "none";
     if (normalForm) normalForm.style.display = "none";
     if (emergencyForm) emergencyForm.style.display = "none";
+    if (em_fprm) em_fprm.style.display = "none";
+    if (wait) wait.style.display = "none";
+    if (gatepass) gatepass.style.display = "none";
 
-    // Example: Show Emergency form when the button is clicked
+    // Logic for displaying forms based on time
+    if (currentHour >= startHour && currentHour < endHour) {
+        console.log("Within allowed time range");
+
+        // Show appropriate forms or messages
+        // Show emergency form
+        if (emergencyForm) emergencyForm.style.display = "block"; // Show emergency form
+        if (normalForm) normalForm.style.display = "block"; // Show normal form
+        if (wait) wait.style.display = "block"; // Show waiting for approval message
+        if (gatepass) gatepass.style.display = "block"; // Show gate pass message
+    } else {
+        console.log("Outside allowed time range");
+        if (eneter) eneter.style.display = "block"; // Show "out_of_time" message
+        return; // Stop further execution if outside allowed time
+    }
+
+    // Show Emergency form when the button is clicked
     const emergencyButton = document.getElementById("Emergency_button");
     if (emergencyButton) {
         emergencyButton.addEventListener("click", () => {
@@ -45,10 +58,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// Function to show the Emergency form
 function showEmergencyForm() {
-    const emergencyForm = document.getElementById("Emergency_form");
-    const normalForm = document.getElementById("Normal_pass_form");
-
-    if (emergencyForm) emergencyForm.style.display = "block";
+    if (em_fprm) em_fprm.style.display = "block";
     if (normalForm) normalForm.style.display = "none";
 }
