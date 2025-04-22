@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const now = new Date();
     const currentHour = now.getHours();
 
-    const startHour = 10; 
+    const startHour = 8; 
     const endHour = 24; 
 
     if (eneter) eneter.style.display = "none";
