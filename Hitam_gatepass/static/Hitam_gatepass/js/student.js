@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentHour = now.getHours();
 
     const startHour = 10; 
-    const endHour = 15; 
+    const endHour = 24; 
 
     if (eneter) eneter.style.display = "none";
     if (normalForm) normalForm.style.display = "none";
