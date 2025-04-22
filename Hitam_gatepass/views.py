@@ -491,7 +491,6 @@ def apply_gatepass(request):
         )
 
         # Redirect to a success page or display a success message
-        return HttpResponse("Gate Pass Applied Successfully!")
         
 
     return render(request, 'Hitam_gatepass/passapply.html',context)

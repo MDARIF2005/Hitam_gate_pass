@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const now = new Date();
     const currentHour = now.getHours();
 
-    const startHour = 8; 
-    const endHour = 24; 
+    const startHour = 10; 
+    const endHour = 15; 
 
     if (eneter) eneter.style.display = "none";
     if (normalForm) normalForm.style.display = "none";
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (wait) wait.style.display = "none";
     if (gatepass) gatepass.style.display = "none";
 
-    if (currentHour >= startHour && currentHour < endHour) {
+    if (currentHour >= startHour && currentHour <= endHour) {
         console.log("Within allowed time range");
 
     
