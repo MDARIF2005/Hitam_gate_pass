@@ -83,7 +83,7 @@ def Student(request):
                     g_in_time=pass_to,
                     g_date=timezone.now(),
                     g_rol=student,  # Pass the student instance
-                    g_status="Pending HOD Approval"
+                    g_status="Not Approval"
                 )
 
                 # Notify the HOD
@@ -123,7 +123,7 @@ def Student(request):
                     g_in_time=pass_to,
                     g_date=timezone.now(),
                     g_rol=student,  # Pass the student instance
-                    g_status="Pending Mentor Approval"
+                    g_status="mentor Approved"
                 )
 
                 # Notify the Mentor
