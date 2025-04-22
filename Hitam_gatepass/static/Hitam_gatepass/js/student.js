@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const now = new Date();
     const currentHour = now.getHours();
 
-    const startHour = 8; 
-    const endHour = 20; 
+    const startHour = 10; 
+    const endHour = 15; 
 
     if (eneter) eneter.style.display = "none";
     if (normalForm) normalForm.style.display = "none";
